@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: sml_web_1
+    healthcheck:
+      test: curl --fail http://localhost || exit 1
+      interval: 60s
+      retries: 5
+      timeout: 10s
+    ports:
+      - "80:2517"
+    depends_on:
+      - redis
+      
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    
